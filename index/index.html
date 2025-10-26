@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flora’s Magic Mantras</title>
+  <meta name="theme-color" content="#0b1220" />
+  <style>
+    :root{
+      --bg:#0b1220; --card:#111a2e; --fg:#eaf1ff; --muted:#a8b3cf; --accent:#8bc6ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica,Arial;
+      color:var(--fg);
+      background: radial-gradient(1200px 800px at 100% -10%, rgba(139,198,255,.12), transparent 60%),
+                  radial-gradient(900px 600px at -10% 110%, rgba(255,138,201,.12), transparent 60%),
+                  var(--bg);
+      display:grid; place-items:center; padding:20px;
+    }
+    .app{
+      width:100%; max-width:720px; position:relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)), var(--card);
+      border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:22px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      overflow:hidden;
+    }
+    .header{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
+    .brand{display:flex; align-items:center; gap:10px}
+    .logo{font-size:24px}
+    .title{font-weight:800; letter-spacing:.2px}
+    .tag{color:var(--muted); font-size:12px}
+    .hero-line{text-align:center; font-weight:800; margin:8px 0 10px; font-size:20px;}
+    .ring{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:240px; height:240px; border-radius:50%;
+      border:2px solid var(--accent); opacity:.25; pointer-events:none; z-index:0;
+      animation:breathe 5000ms ease-in-out infinite;
+      filter: drop-shadow(0 0 10px rgba(139,198,255,.25));
+    }
+    @keyframes breathe{
+      0%{transform:translate(-50%,-50%) scale(.9); opacity:.18}
+      50%{transform:translate(-50%,-50%) scale(1.15); opacity:.4}
+      100%{transform:translate(-50%,-50%) scale(.9); opacity:.18}
+    }
+    .quote{position:relative; z-index:1; font-size:clamp(20px,4.5vw,30px); font-weight:700; margin:14px 0 8px; transition:opacity .35s ease;}
+    .author{position:relative; z-index:1; color:var(--muted); font-size:14px; transition:opacity .35s ease;}
+    .fade-out{opacity:0}
+    .controls{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+    button, select{
+      appearance:none; border:1px solid rgba(255,255,255,.12); background:#1a2540; color:var(--fg);
+      padding:10px 14px; border-radius:999px; font-weight:600; cursor:pointer;
+    }
+    .primary{background:linear-gradient(135deg, var(--accent), #a78bfa); border:0; color:#fff;}
+    .note{color:var(--muted); font-size:12px; margin-top:6px; text-align:center;}
+  </style>
+</head>
+<body>
+  <div class="app" role="main" aria-live="polite">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">🌸</div>
+        <div>
+          <div class="title">Flora’s Magic Mantras</div>
+          <div class="tag">Loving, motivational, caring</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="hero-line">Flora, you are great!</h2>
+
+    <!-- Breathing ring -->
+    <div id="ring" class="ring" aria-hidden="true"></div>
+
+    <!-- Quote -->
+    <p id="quote" class="quote">Loading your mantra…</p>
+    <p id="author" class="author"></p>
+
+    <!-- Simple controls -->
+    <div class="controls">
+      <button id="newBtn" class="primary">New mantra</button>
+      <button id="autoBtn">Auto: Off</button>
+      <label>
+        Speed:
+        <select id="speedSel">
+          <option value="3000">3s</option>
+          <option value="5000" selected>5s</option>
+          <option value="8000">8s</option>
+        </select>
+      </label>
+    </div>
+
+    <p class="note">Tap “Auto” to gently rotate affirmations in sync with the breathing ring.</p>
+  </div>
+
+  <script>
+    // ✨ Loving, encouraging quotes — simple, no storage or cache ✨
+    const QUOTES = [
+      { t: "You are enough, exactly as you are.", a: "Unknown" },
+      { t: "Believe in yourself. You were born to shine.", a: "Unknown" },
+      { t: "You are loved more than you realize.", a: "Unknown" },
+      { t: "Your heart is kind, and that makes the world brighter.", a: "Unknown" },
+      { t: "Every step forward is something to be proud of.", a: "Unknown" },
+      { t: "You are capable of amazing things.", a: "Unknown" },
+      { t: "Your light matters. Don’t dim it for anyone.", a: "Unknown" },
+      { t: "The world is better with you in it.", a: "Unknown" },
+      { t: "You are strong, even when you don’t feel it.", a: "Unknown" },
+      { t: "Breathe. You’ve got this.", a: "Unknown" },
+      { t: "You are worthy of love and good things.", a: "Unknown" },
+      { t: "Trust your journey. You’re becoming something wonderful.", a: "Unknown" },
+      { t: "You matter. Always.", a: "Unknown" },
+      { t: "Keep going—you are doing better than you think.", a: "Unknown" },
+      { t: "You are a masterpiece in progress.", a: "Unknown" },
+      { t: "Your dreams are valid and achievable.", a: "Unknown" },
+      { t: "Your kindness is your superpower.", a: "Unknown" },
+      { t: "Even on hard days, you are enough.", a: "Unknown" },
+      { t: "You are loved, you are capable, and you are brave.", a: "Unknown" },
+      { t: "You were made to bloom in your own time.", a: "Unknown" },
+      { t: "Be proud of how far you’ve come.", a: "Unknown" },
+      { t: "You are stronger than yesterday.", a: "Unknown" },
+      { t: "Never forget your worth.", a: "Unknown" }
+    ];
+
+    const $ = s => document.querySelector(s);
+    const quoteEl = $('#quote');
+    const authorEl = $('#author');
+    const ringEl = $('#ring');
+    const newBtn = $('#newBtn');
+    const autoBtn = $('#autoBtn');
+    const speedSel = $('#speedSel');
+
+    let auto = false;
+    let timer = null;
+
+    function pickNewQuote() {
+      if (!QUOTES.length) return { t: "🌸 You are loved and you matter.", a: "System" };
+      const current = quoteEl.textContent.replace(/[“”]/g, '');
+      let q; let guard = 0;
+      do { q = QUOTES[Math.floor(Math.random() * QUOTES.length)]; guard++; }
+      while (q && q.t === current && guard < 5);
+      return q || QUOTES[0];
+    }
+
+    function renderQuote(q) {
+      quoteEl.classList.add('fade-out');
+      authorEl.classList.add('fade-out');
+      setTimeout(() => {
+        quoteEl.textContent = `“${q.t}”`;
+        authorEl.textContent = q.a ? `— ${q.a}` : '';
+        quoteEl.classList.remove('fade-out');
+        authorEl.classList.remove('fade-out');
+      }, 180);
+    }
+
+    function setSpeed(ms) {
+      ringEl.style.animationDuration = `${ms}ms`;
+      if (auto) {
+        clearInterval(timer);
+        timer = setInterval(() => renderQuote(pickNewQuote()), ms);
+      }
+    }
+
+    newBtn.addEventListener('click', () => renderQuote(pickNewQuote()));
+    autoBtn.addEventListener('click', () => {
+      auto = !auto;
+      autoBtn.textContent = `Auto: ${auto ? 'On' : 'Off'}`;
+      clearInterval(timer);
+      if (auto) timer = setInterval(() => renderQuote(pickNewQuote()), Number(speedSel.value));
+    });
+    speedSel.addEventListener('change', () => setSpeed(Number(speedSel.value)));
+
+    renderQuote(pickNewQuote());
+    setSpeed(Number(speedSel.value));
+  </script>
+</body>
+</html>
