@@ -12,7 +12,8 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica,Arial;
+      margin:0;
+      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica,Arial;
       color:var(--fg);
       background: radial-gradient(1200px 800px at 100% -10%, rgba(139,198,255,.12), transparent 60%),
                   radial-gradient(900px 600px at -10% 110%, rgba(255,138,201,.12), transparent 60%),
@@ -24,16 +25,14 @@
       background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)), var(--card);
       border:1px solid rgba(255,255,255,.06); border-radius:24px; padding:22px;
       box-shadow:0 10px 30px rgba(0,0,0,.25);
-      overflow:hidden; /* keeps the ring within the card */
+      overflow:hidden;
     }
-    .header{
-      display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;
-    }
+    .header{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
     .brand{display:flex; align-items:center; gap:10px}
     .logo{font-size:24px}
     .title{font-weight:800; letter-spacing:.2px}
     .tag{color:var(--muted); font-size:12px}
-    .hero-line{ text-align:center; font-weight:800; margin:8px 0 10px; font-size:20px; }
+    .hero-line{text-align:center; font-weight:800; margin:8px 0 10px; font-size:20px;}
     .ring{
       position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
       width:240px; height:240px; border-radius:50%;
@@ -46,16 +45,16 @@
       50%{transform:translate(-50%,-50%) scale(1.15); opacity:.4}
       100%{transform:translate(-50%,-50%) scale(.9); opacity:.18}
     }
-    .quote{ position:relative; z-index:1; font-size:clamp(20px,4.5vw,30px); font-weight:700; margin:14px 0 8px; transition:opacity .35s ease; }
-    .author{ position:relative; z-index:1; color:var(--muted); font-size:14px; transition:opacity .35s ease; }
+    .quote{position:relative; z-index:1; font-size:clamp(20px,4.5vw,30px); font-weight:700; margin:14px 0 8px; transition:opacity .35s ease;}
+    .author{position:relative; z-index:1; color:var(--muted); font-size:14px; transition:opacity .35s ease;}
     .fade-out{opacity:0}
-    .controls{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px }
+    .controls{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
     button, select{
       appearance:none; border:1px solid rgba(255,255,255,.12); background:#1a2540; color:var(--fg);
       padding:10px 14px; border-radius:999px; font-weight:600; cursor:pointer;
     }
-    .primary{ background:linear-gradient(135deg, var(--accent), #a78bfa); border:0; color:#fff; }
-    .note{ color:var(--muted); font-size:12px; margin-top:6px; text-align:center; }
+    .primary{background:linear-gradient(135deg, var(--accent), #a78bfa); border:0; color:#fff;}
+    .note{color:var(--muted); font-size:12px; margin-top:6px; text-align:center;}
   </style>
 </head>
 <body>
@@ -97,7 +96,7 @@
   </div>
 
   <script>
-    // Loving, encouraging quotes — simple, self-contained.
+    // ✨ Loving, encouraging quotes — simple, no storage or cache ✨
     const QUOTES = [
       { t: "You are enough, exactly as you are.", a: "Unknown" },
       { t: "Believe in yourself. You were born to shine.", a: "Unknown" },
@@ -124,7 +123,7 @@
       { t: "Never forget your worth.", a: "Unknown" }
     ];
 
-    const $ = (sel) => document.querySelector(sel);
+    const $ = s => document.querySelector(s);
     const quoteEl = $('#quote');
     const authorEl = $('#author');
     const ringEl = $('#ring');
@@ -136,9 +135,7 @@
     let timer = null;
 
     function pickNewQuote() {
-      if (!QUOTES.length) {
-        return { t: "🌸 You are loved and you matter.", a: "System" };
-      }
+      if (!QUOTES.length) return { t: "🌸 You are loved and you matter.", a: "System" };
       const current = quoteEl.textContent.replace(/[“”]/g, '');
       let q; let guard = 0;
       do { q = QUOTES[Math.floor(Math.random() * QUOTES.length)]; guard++; }
@@ -158,7 +155,6 @@
     }
 
     function setSpeed(ms) {
-      // Sync ring animation with the chosen interval
       ringEl.style.animationDuration = `${ms}ms`;
       if (auto) {
         clearInterval(timer);
@@ -166,7 +162,6 @@
       }
     }
 
-    // UI events
     newBtn.addEventListener('click', () => renderQuote(pickNewQuote()));
     autoBtn.addEventListener('click', () => {
       auto = !auto;
@@ -176,11 +171,8 @@
     });
     speedSel.addEventListener('change', () => setSpeed(Number(speedSel.value)));
 
-    // Initial state
     renderQuote(pickNewQuote());
-    setSpeed(Number(speedSel.value)); // also sets ring speed
-
-    // No caching, no service worker — works on Android & iOS browsers.
+    setSpeed(Number(speedSel.value));
   </script>
 </body>
 </html>
