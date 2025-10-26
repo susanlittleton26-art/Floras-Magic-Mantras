@@ -204,7 +204,7 @@
       </section>
     </main>
 
-    <p class="footer">Made with 💖 for teens who dream big. <a class="link" href="https://github.com/" target="_blank" rel="noreferrer">Open-source on GitHub</a></p>
+    <p class="footer">Made with 💖 for Flora. <a class="link" href="https://github.com/" target="_blank" rel="noreferrer">Open-source on GitHub</a></p>
   </div>
 
   <script>
@@ -238,27 +238,36 @@
     }
 
     const BASE_QUOTES = [
-      { t: "You are enough, exactly as you are.", a: "Unknown" },
-      { t: "Your light is meant to shine—never dim it for anyone.", a: "Unknown" },
-      { t: "Believe in the power within you. You are unstoppable.", a: "Unknown" },
-      { t: "You are worthy of love, joy, and all good things.", a: "Unknown" },
-      { t: "Every day, you grow stronger—even when it doesn’t feel like it.", a: "Unknown" },
-      { t: "The world is brighter because you’re in it.", a: "Unknown" },
-      { t: "You are allowed to take up space. You matter.", a: "Unknown" },
-      { t: "Keep going—you’re doing better than you think.", a: "Unknown" },
-      { t: "You were born to be extraordinary.", a: "Unknown" },
-      { t: "Never forget: you are loved beyond measure.", a: "Unknown" },
-      { t: "Your dreams are valid. Believe in them.", a: "Unknown" },
-      { t: "Be kind to yourself. You’re doing your best.", a: "Unknown" },
-      { t: "Even on hard days, you are enough.", a: "Unknown" },
-      { t: "Your heart is strong, your soul is beautiful.", a: "Unknown" },
-      { t: "Breathe. You’ve got this.", a: "Unknown" },
-      { t: "You are loved, you are capable, you are enough.", a: "Unknown" },
-      { t: "Trust yourself. You are becoming who you’re meant to be.", a: "Unknown" },
-      { t: "You are a masterpiece in progress.", a: "Unknown" },
-      { t: "Your kindness is your superpower.", a: "Unknown" },
-      { t: "Shine bright—your light inspires others.", a: "Unknown" }
-    ];
+  { t: "You are enough, exactly as you are.", a: "Unknown" },
+  { t: "Believe in yourself. You were born to shine.", a: "Unknown" },
+  { t: "You are loved more than you realize.", a: "Unknown" },
+  { t: "Your heart is kind, and that makes the world brighter.", a: "Unknown" },
+  { t: "Every step forward is something to be proud of.", a: "Unknown" },
+  { t: "You are capable of amazing things.", a: "Unknown" },
+  { t: "Your light matters. Don’t dim it for anyone.", a: "Unknown" },
+  { t: "The world is better with you in it.", a: "Unknown" },
+  { t: "You are strong, even when you don’t feel it.", a: "Unknown" },
+  { t: "Breathe. You’ve got this.", a: "Unknown" },
+  { t: "Your smile has power. Share it with the world.", a: "Unknown" },
+  { t: "You are worthy of love and good things.", a: "Unknown" },
+  { t: "Trust your journey. You’re becoming something wonderful.", a: "Unknown" },
+  { t: "You matter. Always.", a: "Unknown" },
+  { t: "Keep going—you are doing better than you think.", a: "Unknown" },
+  { t: "You are a masterpiece in progress.", a: "Unknown" },
+  { t: "Your dreams are valid and achievable.", a: "Unknown" },
+  { t: "Your kindness is your superpower.", a: "Unknown" },
+  { t: "Even on hard days, you are enough.", a: "Unknown" },
+  { t: "You are loved, you are capable, and you are brave.", a: "Unknown" },
+  { t: "Your soul shines even when the sky is cloudy.", a: "Unknown" },
+  { t: "You were made to bloom in your own time.", a: "Unknown" },
+  { t: "Be proud of how far you’ve come.", a: "Unknown" },
+  { t: "You are stronger than yesterday.", a: "Unknown" },
+  { t: "Never forget your worth.", a: "Unknown" }
+];
+
+if (!BASE_QUOTES || BASE_QUOTES.length === 0) {
+  BASE_QUOTES.push({ t: "🌸 You are loved and you matter.", a: "System" });
+}
 
     const $ = (sel) => document.querySelector(sel);
     function fmtDate(d = new Date()){ return d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}); }
